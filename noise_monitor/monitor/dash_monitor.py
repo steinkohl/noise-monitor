@@ -5,7 +5,7 @@ import pandas as pd
 
 
 from .plotly_figures import create_3d_figure, create_contour_figure
-from ground_station import GroundStationController
+from ..ground_station import GroundStationController
 
 
 def display_results(controller: GroundStationController, sweep_df: pd.DataFrame = None):
@@ -33,7 +33,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
     app.layout = html.Div(
         [
             html.H2(title),
-            html.H4('Noise sweep of PSD values displayed as 3D scatter'),
+            html.H4("Noise sweep of PSD values displayed as 3D scatter"),
             dcc.Graph(id="graph", figure=fig_3d),
             html.A(
                 html.Button("Download 3D graph as static HTML"),
@@ -41,13 +41,21 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
                 href="data:text/html;base64," + encoded_3d,
                 download="3d_scatter.html",
             ),
-            html.H4('Contour plot of the min PSD values'),
-            html.H6('The contour plot shows the distribution of the minimum PSD levels.'),
-            html.H6('The intersection of the two dotted lines shows the estimated mean of the radiation source '
-                    f'at {max_position.azimuth:.2f} azimuth and {max_position.elevation:.2f} elevation.'),
-            html.H6('The green ellipse shows the half power band width of '
-                    f'{oaz:.2f}° azimuth and {oel:.2f}° elevation.'),
-            html.H6('If present, the red line shows the estimated path of the sun during the measurement.'),
+            html.H4("Contour plot of the min PSD values"),
+            html.H6(
+                "The contour plot shows the distribution of the minimum PSD levels."
+            ),
+            html.H6(
+                "The intersection of the two dotted lines shows the estimated mean of the radiation source "
+                f"at {max_position.azimuth:.2f} azimuth and {max_position.elevation:.2f} elevation."
+            ),
+            html.H6(
+                "The green ellipse shows the half power band width of "
+                f"{oaz:.2f}° azimuth and {oel:.2f}° elevation."
+            ),
+            html.H6(
+                "If present, the red line shows the estimated path of the sun during the measurement."
+            ),
             dcc.Graph(id="graph", figure=fig_con),
             html.A(
                 html.Button("Download contour graph as static HTML"),
@@ -63,4 +71,3 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
         debug=True,
         port=controller.port,
     )
-

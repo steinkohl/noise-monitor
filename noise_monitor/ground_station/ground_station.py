@@ -34,7 +34,9 @@ class GroundStation:
             self.config = config_dict
             self._load_config_dict(no_sdr=no_sdr, inactive=inactive)
 
-    def load_config(self, config_file: str, no_sdr: bool = False, inactive: bool = False):
+    def load_config(
+        self, config_file: str, no_sdr: bool = False, inactive: bool = False
+    ):
         print("Loading ground station config..")
         self.config = load_config_from_file(config_file=config_file)
         self._load_config_dict(no_sdr=no_sdr, inactive=inactive)

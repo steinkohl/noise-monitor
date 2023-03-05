@@ -5,4 +5,3 @@ from .sdr import SDR
 from .webcam import Webcam
 from .ground_station import GroundStation
 from .controller import GroundStationController
-from .monitor import display_results

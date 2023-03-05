@@ -1,35 +1,29 @@
+#! python3
+
 import time
 import argparse
 
-from ground_station import GroundStationController, display_results
+import noise_monitor
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("config_file", type=str)
-    parser.add_argument(
-        "-tp_az", "--target_position_azimuth", type=float, default=None
-    )
+    parser.add_argument("-tp_az", "--target_position_azimuth", type=float, default=None)
     parser.add_argument(
         "-tp_el", "--target_position_elevation", type=float, default=None
     )
-    parser.add_argument(
-        "-s_az", "--step_azimuth", type=float, default=None
-    )
-    parser.add_argument(
-        "-s_el", "--step_elevation", type=float, default=None
-    )
-    parser.add_argument(
-        "-w_az", "--width_azimuth", type=float, default=None
-    )
-    parser.add_argument(
-        "-w_el", "--width_elevation", type=float, default=None
-    )
+    parser.add_argument("-s_az", "--step_azimuth", type=float, default=None)
+    parser.add_argument("-s_el", "--step_elevation", type=float, default=None)
+    parser.add_argument("-w_az", "--width_azimuth", type=float, default=None)
+    parser.add_argument("-w_el", "--width_elevation", type=float, default=None)
     parser.add_argument("-img", "--take_images", action="store_true")
     parser.add_argument("-res", "--show_results", action="store_true")
     args = parser.parse_args()
 
     t_start = int(time.time())
-    mission_control = GroundStationController(config_file=args.config_file)
+    mission_control = noise_monitor.GroundStationController(
+        config_file=args.config_file
+    )
 
     if (
         args.target_position_azimuth is not None
@@ -55,4 +49,4 @@ if __name__ == "__main__":
     df.to_csv(f"sweep_data_{t_start}-{int(time.time())}.csv")
 
     if args.show_results:
-        display_results(mission_control)
+        noise_monitor.display_results(mission_control)

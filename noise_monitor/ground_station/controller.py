@@ -42,7 +42,9 @@ class GroundStationController:
                 c.get("scan_width_azimuth"), c.get("scan_width_elevation")
             )
             self.set_step_size(c.get("step_size_azimuth"), c.get("step_size_elevation"))
-            self.ground_station = GroundStation(config_dict=self.config, no_sdr=no_sdr, inactive=inactive)
+            self.ground_station = GroundStation(
+                config_dict=self.config, no_sdr=no_sdr, inactive=inactive
+            )
             self._load_astro_object()
         if ground_station is not None:
             self.ground_station = ground_station
@@ -148,14 +150,18 @@ class GroundStationController:
             try:
                 mp = self.ground_station.measure_at_position(target_pos)
             except Exception as e:
-                print(f"Could not measure at {target_pos} due to Exception: {e}\n"
-                      f"Try resetting rotator motor driver and try again..")
+                print(
+                    f"Could not measure at {target_pos} due to Exception: {e}\n"
+                    f"Try resetting rotator motor driver and try again.."
+                )
                 try:
                     self.ground_station.rotator.reset_motor_driver()
                     mp = self.ground_station.measure_at_position(target_pos)
                 except Exception as e:
-                    print(f"Could not get rotator to work - Exception: {e}\n"
-                          f"Exit motion tracking..")
+                    print(
+                        f"Could not get rotator to work - Exception: {e}\n"
+                        f"Exit motion tracking.."
+                    )
                     break
             self.measurement_points.append(mp)
             if take_images:
@@ -163,11 +169,15 @@ class GroundStationController:
                 try:
                     self.take_image(file_name)
                 except Exception as e:
-                    print(f"Could not take image due to Exception: {e}\nRetry taking image..")
+                    print(
+                        f"Could not take image due to Exception: {e}\nRetry taking image.."
+                    )
                     try:
                         self.take_image(file_name)
                     except Exception as e:
-                        print(f"Could not take image due to Exception: {e}\nSkip imaging for this position..")
+                        print(
+                            f"Could not take image due to Exception: {e}\nSkip imaging for this position.."
+                        )
             is_pos = mp.measurement_position
             print(
                 f"Measured PSDs at position AZ{is_pos.azimuth:.2f}, EL{is_pos.elevation:.2f}"

@@ -55,7 +55,7 @@ class AstroObject:
             azely.compute(
                 self.object_name,
                 site=self.observation_location,
-                time=str(pd.to_datetime(timestamp, unit='s')),
+                time=str(pd.to_datetime(timestamp, unit="s")),
                 view="UTC",
                 freq="1T",
             )

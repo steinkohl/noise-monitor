@@ -81,7 +81,10 @@ class GenericRotator:
             #     f"Difference-{target_difference}, "
             #     f"Count:{count}"
             # )
-            if position_difference.azimuth < 0.5 and position_difference.elevation < 0.5:
+            if (
+                position_difference.azimuth < 0.5
+                and position_difference.elevation < 0.5
+            ):
                 if (
                     target_difference.azimuth < self.positioning_tolerance
                     and target_difference.elevation < self.positioning_tolerance
