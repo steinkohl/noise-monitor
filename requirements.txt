@@ -1,0 +1,9 @@
+numpy
+pandas
+simplesoapy
+simplespectral
+soapy_power
+pyfftw
+azely
+opencv-python
+plotly

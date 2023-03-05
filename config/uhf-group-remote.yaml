@@ -1,0 +1,32 @@
+groundstation:
+  name: 'DK0TU Groundstation'
+  location: '52.5122, 13.3270'  # GPS Coordinates or Address of the Groundstation
+  rotator:
+    type: 'spid'  # Currently, only 'spid' type are supported
+    netrotctl_ip: 'localhost'  # IP address of the netrotctl server
+    netrotctl_port: '4534'  # Port of the netrotctl server
+  sdr:
+    type: 'uhd'  # Currently, 'uhd', 'lime' and 'rtlsdr' SDRs are supported
+    sample_rate: 4e6  # Value in [Hz], if no sample rate is provided -> fallback to <type> default
+    lna_gain: 76  # Value in [dB], if no lna gain is provided -> fallback to <type> default
+  antenna:
+    name: 'L+S-Band Dish'
+    type: 'generic'  # Currently 'parabolic' and 'generic' type antennas are supported
+    gain: 20.95  # Value in [dBi], if parabolic antenna -> only the gain of feed, gain of dish will be calc. via dia
+    opening_azimuth: 18  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
+    opening_elevation: 18  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
+    diameter:  # Value in [m]
+    frequency_range: [420e6, 450e6]
+  webcam:
+    rtsp_url: 'rtsp://admin:430,200@localhost:1555/h264Preview_01_main'
+    cam_opening: 90  # Horizontal opening angle of webcam in [deg]
+    position_azimuth: 0.491  # Position of pointing direction of antenna in azimuth axis in percent of image width
+    position_elevation: 0.531  # Position of pointing direction of antenna in elevation axis in percent of image height
+controller:
+  application_port: 8050  # Port of the web application which will show the results
+  target_object: "Sun"  # Name of the astronomical object which shall be tracked e.g. sun, moon, sagittarius a*, ...
+  target_frequency: 435e6
+  step_size_azimuth: 4
+  step_size_elevation: 4
+  scan_width_azimuth: 30
+  scan_width_elevation: 30
