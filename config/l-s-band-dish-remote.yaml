@@ -16,17 +16,18 @@ groundstation:
     opening_azimuth:  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
     opening_elevation:  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
     diameter: 3.0  # Value in [m]
+    reflector_efficiency: 0.5 # Value between 0..1
     frequency_range: [1200e6, 1300e6]  # [2320e6, 2450e6]
   webcam:
     rtsp_url: 'rtsp://admin:430,200@localhost:1554/h264Preview_01_main'
     cam_opening: 90  # Horizontal opening angle of webcam in [deg]
-    position_azimuth: 0.539 # 0.5742  # Position of pointing direction of antenna in azimuth axis in percent of image width
+    position_azimuth: 0.539  # Position of pointing direction of antenna in azimuth axis in percent of image width
     position_elevation: 0.5625  # Position of pointing direction of antenna in elevation axis in percent of image height
 controller:
   application_port: 8050  # Port of the web application which will show the results
   target_object: "Sun"  # Name of the astronomical object which shall be tracked e.g. sun, moon, sagittarius a*, ...
-  target_frequency: 1250e6
-  step_size_azimuth: 1
-  step_size_elevation: 1
-  scan_width_azimuth: 10
-  scan_width_elevation: 10
+  target_frequency: 1250e6 # 2380e6
+  step_size_azimuth: 2
+  step_size_elevation: 2
+  scan_width_azimuth: 25
+  scan_width_elevation: 25

@@ -16,7 +16,7 @@ groundstation:
     opening_azimuth:  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
     opening_elevation:  # Value in [deg], if parabolic antenna -> will be calculated via dish diameter
     diameter: 10  # Value in [m]
-    frequency_range: [10e9, 10.2e9]
+    frequency_range: [10e9, 10.2e9]  # Frequency range of the antenna, given in a list [from_x, to_y] in unit [Hz]
     reflector_efficiency: 0.5 # Value between 0..1
     override_gain:  # Value in [dBi]. Allows to override the total gain of the antenna
   webcam:
