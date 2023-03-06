@@ -26,6 +26,7 @@ groundstation:
     position_elevation: 0.5625  # Position of pointing direction of antenna in elevation axis in percent of image height
 controller:
   application_port: 8050  # Port of the web application which will show the results
+  application_ip: "192.168.59.47"
   target_object: "Sun"  # Name of the astronomical object which shall be tracked e.g. sun, moon, sagittarius a*, ...
   target_frequency: 1250e6
   step_size_azimuth: 2

@@ -39,6 +39,7 @@ DEFAULT_VALUES = {
         "target_object": "Sun",
         "target_frequency": None,
         "application_port": 8050,
+        "application_ip": "127.0.0.1",
         "step_size_azimuth": None,
         "step_size_elevation": None,
         "scan_width_azimuth": 20,

@@ -22,5 +22,6 @@ setup(
         "azely",
         "opencv-python",
         "plotly",
+        "dash",
     ],
 )

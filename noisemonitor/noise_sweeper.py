@@ -21,9 +21,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     t_start = int(time.time())
-    mission_control = GroundStationController(
-        config_file=args.config_file
-    )
+    mission_control = GroundStationController(config_file=args.config_file)
 
     if (
         args.target_position_azimuth is not None

@@ -21,6 +21,7 @@ class GroundStationController:
     target_frequency: float = None
     config: dict = None
     port: int = None
+    ip: str = None
 
     def __init__(
         self,
@@ -30,6 +31,7 @@ class GroundStationController:
         scan_width: (float, float) = None,
         step_size: (float, float) = None,
         application_port: int = None,
+        application_ip: str = None,
         no_sdr: bool = False,
         inactive: bool = False,
     ):
@@ -38,6 +40,7 @@ class GroundStationController:
             c = self.config["controller"]
             self.target_frequency = c.get("target_frequency")
             self.port = c.get("application_port")
+            self.ip = c.get("application_ip")
             self.set_scan_width(
                 c.get("scan_width_azimuth"), c.get("scan_width_elevation")
             )
@@ -56,6 +59,8 @@ class GroundStationController:
             self.set_step_size(step_size[0], step_size[1])
         if application_port is not None:
             self.port = application_port
+        if application_ip is not None:
+            self.ip = application_ip
 
     def _load_astro_object(self, object_name: str = None):
         if object_name is None:

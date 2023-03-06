@@ -70,4 +70,5 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
     app.run_server(
         debug=True,
         port=controller.port,
+        host=controller.ip,
     )

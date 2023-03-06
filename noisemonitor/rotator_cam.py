@@ -14,9 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     factor = args.rescale_factor
-    gsc = GroundStationController(
-        config_file=args.config_file, no_sdr=True
-    )
+    gsc = GroundStationController(config_file=args.config_file, no_sdr=True)
 
     cap = cv2.VideoCapture(gsc.ground_station.webcam.rtsp_url, cv2.CAP_FFMPEG)
 
