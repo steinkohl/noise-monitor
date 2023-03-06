@@ -1,16 +1,16 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="noise_monitor",
-    version="0.1",
+    version="0.2",
     description="A python package to control ground stations and perform measurements",
     author="Felix Steinkohl",
     author_email="steinkohl@campus.tu-berlin.de",
-    packages=["noise_monitor"],
+    packages=find_packages(),
     scripts=[
-        "noise_monitor/noise_monitor.py",
-        "noise_monitor/noise_sweeper.py",
-        "noise_monitor/rotator_cam.py",
+        "noisemonitor/noise_monitor.py",
+        "noisemonitor/noise_sweeper.py",
+        "noisemonitor/rotator_cam.py",
     ],
     install_requires=[
         "numpy",

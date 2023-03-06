@@ -3,7 +3,7 @@
 import time
 import argparse
 
-import noise_monitor
+from noisemonitor import GroundStationController, display_results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     t_start = int(time.time())
-    mission_control = noise_monitor.GroundStationController(
+    mission_control = GroundStationController(
         config_file=args.config_file
     )
 
@@ -49,4 +49,4 @@ if __name__ == "__main__":
     df.to_csv(f"sweep_data_{t_start}-{int(time.time())}.csv")
 
     if args.show_results:
-        noise_monitor.display_results(mission_control)
+        display_results(mission_control)

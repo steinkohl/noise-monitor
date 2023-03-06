@@ -3,7 +3,7 @@
 import argparse
 import pandas as pd
 
-import noise_monitor
+from noisemonitor import GroundStationController, display_results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     df = pd.read_csv(args.sweep_csv, index_col=0)
     df["timestamp"] = pd.to_datetime(df["timestamp"])
 
-    mission_control = noise_monitor.GroundStationController(
+    mission_control = GroundStationController(
         config_file=args.config_file, inactive=True
     )
-    noise_monitor.display_results(controller=mission_control, sweep_df=df)
+    display_results(controller=mission_control, sweep_df=df)

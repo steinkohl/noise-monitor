@@ -3,7 +3,7 @@
 import cv2
 import argparse
 
-import noise_monitor
+from noisemonitor import GroundStationController
 
 WINDOW_NAME = "Rotator Webcam"
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     factor = args.rescale_factor
-    gsc = noise_monitor.GroundStationController(
+    gsc = GroundStationController(
         config_file=args.config_file, no_sdr=True
     )
 
