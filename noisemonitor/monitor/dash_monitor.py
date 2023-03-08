@@ -34,7 +34,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
         [
             html.H2(title),
             html.H4("Noise sweep of PSD values displayed as 3D scatter"),
-            dcc.Graph(id="graph", figure=fig_3d),
+            dcc.Graph(id="graph_3d", figure=fig_3d),
             html.A(
                 html.Button("Download 3D graph as static HTML"),
                 id="download",
@@ -56,7 +56,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
             html.H6(
                 "If present, the red line shows the estimated path of the sun during the measurement."
             ),
-            dcc.Graph(id="graph", figure=fig_con),
+            dcc.Graph(id="graph_con", figure=fig_con),
             html.A(
                 html.Button("Download contour graph as static HTML"),
                 id="download",
