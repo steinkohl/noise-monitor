@@ -2,6 +2,7 @@
 
 import time
 import argparse
+import pandas as pd
 
 from noisemonitor import GroundStationController, display_results
 
@@ -18,7 +19,14 @@ if __name__ == "__main__":
     parser.add_argument("-w_el", "--width_elevation", type=float, default=None)
     parser.add_argument("-img", "--take_images", action="store_true")
     parser.add_argument("-res", "--show_results", action="store_true")
+    parser.add_argument("-st", "--start_time", type=str, default=None)
     args = parser.parse_args()
+
+    if args.start_time is not None:
+        t = pd.to_datetime(args.start_time, utc=True).timestamp()
+        while time.time() < t:
+            print(f"Time to wait: {int(t-time.time())}sec until {args.start_time} UTC")
+            time.sleep(30)
 
     t_start = int(time.time())
     mission_control = GroundStationController(config_file=args.config_file)
