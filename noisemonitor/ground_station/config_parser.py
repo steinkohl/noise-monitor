@@ -53,15 +53,38 @@ def load_config_from_file(
     default_values: dict = DEFAULT_VALUES,
 ) -> dict:
     """
-    TODO: Loads config file and returns standardized dictionary
+    This function loads the given yaml config file and adds default values, if settings are omitted.
+    :param config_file: Path of the yaml file, containing the ground station config
+    :param default_values: Dict with default settings
+    :return: updated dict, with all necessary setting parameters
     """
     vals = default_values.copy()
-    with open(config_file, "r") as f:
-        config = yaml.safe_load(f)
-    if config.get("groundstation") is None:
-        print("No groundstation given in config file -> Fallback to defaults")
-    if config.get("controller") is None:
-        print("No controller given in config file -> Fallback to defaults")
-    # only update values which are not None
-    vals.update((k, v) for k, v in config.items() if v is not None)
+    try:
+        with open(config_file, "r") as f:
+            config = yaml.safe_load(f)
+        gs = config.get("groundstation")
+        con = config.get("controller")
+        if gs is None:
+            print("No groundstation given in config file -> Fallback to defaults")
+        else:
+            # only update values which are not None
+            for k_o, v_o in gs.items():
+                if v_o is not None:
+                    if isinstance(v_o, dict):
+                        for k, v in v_o.items():
+                            if v is not None:
+                                vals["groundstation"][k_o][k] = v
+                    else:
+                        vals["groundstation"][k_o] = gs[k_o]
+        if con is None:
+            print("No controller given in config file -> Fallback to defaults")
+            config.update("controller", config.get("controller"))
+        else:
+            # only update values which are not None
+            for k, v in con.items():
+                if v is not None:
+                    vals["controller"][k] = v
+    except Exception as e:
+        raise Exception(f"Could not parse {config_file} due to Error: {e}")
     return vals
+
