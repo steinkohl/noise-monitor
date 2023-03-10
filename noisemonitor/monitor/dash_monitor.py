@@ -37,7 +37,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
             dcc.Graph(id="graph_3d", figure=fig_3d),
             html.A(
                 html.Button("Download 3D graph as static HTML"),
-                id="download",
+                id="download_3d",
                 href="data:text/html;base64," + encoded_3d,
                 download="3d_scatter.html",
             ),
@@ -59,7 +59,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
             dcc.Graph(id="graph_con", figure=fig_con),
             html.A(
                 html.Button("Download contour graph as static HTML"),
-                id="download",
+                id="download_con",
                 href="data:text/html;base64," + encoded_con,
                 download="contour_plot.html",
             ),
