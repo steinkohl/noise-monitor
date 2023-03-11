@@ -8,3 +8,4 @@ azely
 opencv-python
 plotly
 dash
+lmfit

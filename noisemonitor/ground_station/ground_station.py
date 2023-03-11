@@ -159,7 +159,7 @@ class GroundStation:
         self,
         rotator_type: str,
         rotator_ip: str = None,
-        rotator_port: str = None,
+        rotator_port: int = None,
         rotator_tolerance: float = None,
     ):
         if rotator_ip is None or rotator_port is None:

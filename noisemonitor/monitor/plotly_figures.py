@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 from ..ground_station import GroundStationController, Position
+from .gauss_fit_2d import gaussian_fit_2d_mesh, gaussian_fit_2d_max_pos
 
 
 def create_3d_figure(sweep_df: pd.DataFrame) -> go.Figure:
@@ -12,6 +13,21 @@ def create_3d_figure(sweep_df: pd.DataFrame) -> go.Figure:
             f"Expected only one resolution bandwidth within the same sweep file, but got {bandwidth}"
         )
     bandwidth = bandwidth[0]
+
+    X, Y, Z = gaussian_fit_2d_mesh(
+        x=sweep_df["measurement_azimuth"],
+        y=sweep_df["measurement_elevation"],
+        z=sweep_df[f"psd_min"],
+    )
+    fig.add_trace(
+        go.Surface(
+            x=X, y=Y, z=Z,
+            opacity=0.5, name="Gauss_Fit",
+            showscale=False,
+            showlegend=True,
+        )
+    )
+
     fig.add_trace(
         go.Scatter3d(
             x=sweep_df["measurement_azimuth"],
@@ -90,10 +106,16 @@ def create_contour_figure(
         )
     )
 
-    max_sigs = sweep_df[sweep_df["psd_min"] > sweep_df["psd_min"].quantile(0.95)]
-    max_sig = max_sigs[["measurement_azimuth", "measurement_elevation"]].mean()
-    x_max = max_sig["measurement_azimuth"]
-    y_max = max_sig["measurement_elevation"]
+    x_max, y_max = gaussian_fit_2d_max_pos(
+        x=sweep_df["measurement_azimuth"],
+        y=sweep_df["measurement_elevation"],
+        z=sweep_df[f"psd_min"],
+    )
+
+    # max_sigs = sweep_df[sweep_df["psd_min"] > sweep_df["psd_min"].quantile(0.95)]
+    # max_sig = max_sigs[["measurement_azimuth", "measurement_elevation"]].mean()
+    # x_max = max_sig["measurement_azimuth"]
+    # y_max = max_sig["measurement_elevation"]
     max_pos = Position(x_max, y_max)
     angle_az, angle_el = controller.ground_station.antenna.opening_angle
 
