@@ -23,5 +23,6 @@ setup(
         "opencv-python",
         "plotly",
         "dash",
+        "lmfit",
     ],
 )
