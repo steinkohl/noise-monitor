@@ -7,19 +7,73 @@ import pandas as pd
 from noisemonitor import GroundStationController, display_results
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config_file", type=str)
-    parser.add_argument("-tp_az", "--target_position_azimuth", type=float, default=None)
-    parser.add_argument(
-        "-tp_el", "--target_position_elevation", type=float, default=None
+    parser = argparse.ArgumentParser(
+        description="Controls ground stations to collect noise data and displays results"
     )
-    parser.add_argument("-s_az", "--step_azimuth", type=float, default=None)
-    parser.add_argument("-s_el", "--step_elevation", type=float, default=None)
-    parser.add_argument("-w_az", "--width_azimuth", type=float, default=None)
-    parser.add_argument("-w_el", "--width_elevation", type=float, default=None)
-    parser.add_argument("-img", "--take_images", action="store_true")
-    parser.add_argument("-res", "--show_results", action="store_true")
-    parser.add_argument("-st", "--start_time", type=str, default=None)
+    parser.add_argument(
+        "config_file", type=str, help="Yaml configuration file of the ground station"
+    )
+    parser.add_argument(
+        "-tp_az",
+        "--target_position_azimuth",
+        type=float,
+        default=None,
+        help="Azimuth angle of the target point",
+    )
+    parser.add_argument(
+        "-tp_el",
+        "--target_position_elevation",
+        type=float,
+        default=None,
+        help="Elevation angle of the target point",
+    )
+    parser.add_argument(
+        "-s_az",
+        "--step_azimuth",
+        type=float,
+        default=None,
+        help="Angle of the step size in azimuth direction",
+    )
+    parser.add_argument(
+        "-s_el",
+        "--step_elevation",
+        type=float,
+        default=None,
+        help="Angle of the step size in elevation direction",
+    )
+    parser.add_argument(
+        "-w_az",
+        "--width_azimuth",
+        type=float,
+        default=None,
+        help="Angle of the scan width in azimuth direction",
+    )
+    parser.add_argument(
+        "-w_el",
+        "--width_elevation",
+        type=float,
+        default=None,
+        help="Angle of the scan width in elevation direction",
+    )
+    parser.add_argument(
+        "-img",
+        "--take_images",
+        action="store_true",
+        help="Images shall be taken at every measurement point",
+    )
+    parser.add_argument(
+        "-res",
+        "--show_results",
+        action="store_true",
+        help="The results shall be presented at the end of the measurements",
+    )
+    parser.add_argument(
+        "-st",
+        "--start_time",
+        type=str,
+        default=None,
+        help="The time at which the measurement shall start",
+    )
     args = parser.parse_args()
 
     if args.start_time is not None:

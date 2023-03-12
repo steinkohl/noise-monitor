@@ -8,9 +8,19 @@ from noisemonitor import GroundStationController
 WINDOW_NAME = "Rotator Webcam"
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config_file", type=str)
-    parser.add_argument("-r", "--rescale_factor", type=float, default=0.5)
+    parser = argparse.ArgumentParser(
+        description="Streams webcam image of the ground station, augmented by critical information"
+    )
+    parser.add_argument(
+        "config_file", type=str, help="Yaml configuration file of the ground station"
+    )
+    parser.add_argument(
+        "-r",
+        "--rescale_factor",
+        type=float,
+        default=0.5,
+        help="The factor in with the image of the webcam shall be rescaled",
+    )
     args = parser.parse_args()
 
     factor = args.rescale_factor
