@@ -1,5 +1,14 @@
+The noise monitor package provides tools for:
+- The control of remote ground station
+- The localisation of noise sources
+- The tracking of astronomical objects
+- The streaming of augmented webcam footage of the GS
+- The presentation of PSD noise measurements
+
+
 ### Install Guide ###
 
+0. Clone this Repository
 1. Install SoapySDR and the needed drivers for your SDR
 2. Install OpenCV with `sudo apt-get install python3-opencv -y`
 3. Install Python Package with `python setup.py install`
