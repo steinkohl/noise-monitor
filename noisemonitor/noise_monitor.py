@@ -6,9 +6,9 @@ import pandas as pd
 from noisemonitor import GroundStationController, display_results
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config_file", type=str)
-    parser.add_argument("sweep_csv", type=str)
+    parser = argparse.ArgumentParser(description="Displays results of previously captured noise sweep")
+    parser.add_argument("config_file", type=str, help="Yaml configuration file of the ground station")
+    parser.add_argument("sweep_csv", type=str, help="CSV file, containing the previously recorded noise sweep")
     args = parser.parse_args()
 
     df = pd.read_csv(args.sweep_csv, index_col=0)

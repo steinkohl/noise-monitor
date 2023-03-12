@@ -16,6 +16,13 @@ class Rotator:
         netrotctl_port: int = None,
         positioning_tolerance: float = None,
     ):
+        """This function initializes the rotator class.
+
+        :param rotator_type: The type of the rotator system, e.g. "spid" rotator
+        :param netrotctl_ip: The IP address of the ROTCTL server
+        :param netrotctl_port: The port address of the ROTCTL server
+        :param positioning_tolerance: The accuracy or resolution of the rotator system
+        """
         rot_type = str(rotator_type).lower()
         if rot_type == "spid":
             self._rotator = SPIDRotator(
@@ -32,26 +39,37 @@ class Rotator:
         """This function sets the motion control of the rotator controller to move the rotator towards the given
         position. After converging into a steady rotator position, the current positional reading will be returned.
 
-        Args:
-            target_position (Position): The position (azimuth and elevation) where the rotator shall point to
-
-        Returns (Position): The position the rotator could reach, after converging into a steady position reading.
-
+        :param target_position: The position (azimuth and elevation) where the rotator shall point to
+        :return: The position the rotator could reach, after converging into a steady position reading.
         """
         return self._rotator.move_rotator_to_position(target_position)
 
     def get_position(self) -> Position:
         """This function returns the current position reading of the rotator controller.
 
-        Returns (Position): The current position reading of the rotator controller
-
+        :return: The current position reading of the rotator controller
         """
         return self._rotator.get_position()
 
+    def get_positioning_tolerance(self) -> float:
+        """This function returns the positional tolerance of the rotator system.
+
+        :return: The positional tolerance of the rotator system
+        """
+        return self._rotator.positioning_tolerance
+
     def stop_motion(self):
+        """This function stops the movement of the rotator system.
+
+        :return: None
+        """
         return self._rotator.stop_motion()
 
     def reset_motor_driver(self):
+        """This function resets the motordriver of the rotator system
+
+        :return: None
+        """
         return self._rotator.reset_motor_driver()
 
 

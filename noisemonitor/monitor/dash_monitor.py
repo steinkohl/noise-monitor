@@ -9,6 +9,12 @@ from ..ground_station import GroundStationController
 
 
 def display_results(controller: GroundStationController, sweep_df: pd.DataFrame = None):
+    """This function launches a dash web server to display the results of the noise sweep data.
+
+    :param controller: The initialized controller class of the ground station which recorded the data
+    :param sweep_df: The measurement data, collected during noise sweep. If None, the previous measured data is used.
+    :return: None
+    """
     if sweep_df is None:
         sweep_df = controller.get_measurement_points_as_dataframe()
     title = "Noise Monitor"
@@ -29,6 +35,7 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
     encoded_con = b64encode(html_bytes_con).decode()
 
     oaz, oel = controller.ground_station.antenna.opening_angle
+    pos_tol = controller.ground_station.rotator.get_positioning_tolerance()
 
     app.layout = html.Div(
         [
@@ -46,9 +53,11 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
                 "The contour plot shows the distribution of the minimum PSD levels."
             ),
             html.H6(
-                "The intersection of the two dotted lines shows the estimated mean of the radiation source "
-                f"at {max_position.azimuth:.2f} azimuth and {max_position.elevation:.2f} elevation."
+                "The intersection of the two dotted lines shows the maximum of estimated Gaussian distribution of the "
+                f"radiation source at {max_position.azimuth:.2f} azimuth and {max_position.elevation:.2f} elevation."
             ),
+            html.H6(f"The inaccuracy of the estimated position is thereby at least {pos_tol:.2f}° due to the rotator"
+                    " resolution."),
             html.H6(
                 "The green ellipse shows the half power band width of "
                 f"{oaz:.2f}° azimuth and {oel:.2f}° elevation."

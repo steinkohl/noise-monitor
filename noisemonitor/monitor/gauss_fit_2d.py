@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import lmfit
-from lmfit.lineshapes import gaussian2d, lorentzian
 
 
 def gaussian_fit_2d_mesh(x: pd.Series, y: pd.Series, z: pd.Series) -> (np.ndarray, np.ndarray, np.ndarray):
@@ -11,7 +10,6 @@ def gaussian_fit_2d_mesh(x: pd.Series, y: pd.Series, z: pd.Series) -> (np.ndarra
     model = lmfit.models.Gaussian2dModel()
     params = model.guess(z_plus, x, y)
     result = model.fit(z_plus, x=x, y=y, params=params)
-    # lmfit.report_fit(result)
     Z_fit = model.func(X, Y, **result.best_values) + z.min()
     return X, Y, Z_fit
 
