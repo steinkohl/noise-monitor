@@ -35,6 +35,18 @@ class GroundStationController:
         no_sdr: bool = False,
         inactive: bool = False,
     ):
+        """
+        This function initializes the ground station controller.
+        :param config_file: The path of the ground station config file
+        :param ground_station: The ground station object which shall be controlled
+        :param astronomical_object: The name of the astronomical object which should be tracked
+        :param scan_width: The scan width of the sky area with shall be scanned, given in degree (AZ, EL)
+        :param step_size: The step size in which the sky area shall be scanned, given in degree (AZ, EL)
+        :param application_port: The port of the dash application, where the results shall be presented
+        :param application_ip: The IP address of the dash application, where the results shall be presented
+        :param no_sdr: If set True, the ground station class will be initialized without an SDR
+        :param inactive: If set True, the ground station class will be initialized without an SDR or rotator
+        """
         if config_file is not None:
             self.config = load_config_from_file(config_file)
             c = self.config["controller"]
@@ -72,14 +84,30 @@ class GroundStationController:
         )
 
     def set_target_position(self, azimuth: float, elevation: float):
+        """
+        This function sets the target position of the measurement
+        :param azimuth: Azimuth angle in degree
+        :param elevation: Elevation angle in degree
+        :return: None
+        """
         self.target_position = Position(azimuth, elevation)
 
     def set_target_position_to_astro_object(self):
+        """
+        This function sets the target position of the measurement to the defined astronomical object
+        :return: None
+        """
         self.target_position = self.astro_object.get_position()
 
     def set_target_frequency(
         self, frequency: float = None, set_center_frequency: bool = False
     ):
+        """
+        This function sets the target frequency for the measurement.
+        :param frequency: The frequency where the PSD measurements shall take place
+        :param set_center_frequency: In True and no frequency is provided, the frequency will be set to the center frequency of the antenna
+        :return: None
+        """
         if frequency is None:
             frequency = self.target_frequency
         if frequency is None or set_center_frequency:
@@ -87,9 +115,21 @@ class GroundStationController:
         self.ground_station.sdr.start_rx(frequency=frequency)
 
     def set_scan_width(self, azimuth: float, elevation: float):
+        """
+        This function sets the scan width of the sky area with shall be scanned
+        :param azimuth: Scan width in azimuth direction in degree
+        :param elevation: Scan width in elevation direction in degree
+        :return: None
+        """
         self.scan_width = (float(azimuth), float(elevation))
 
     def set_step_size(self, azimuth: float = None, elevation: float = None):
+        """
+        This function sets the step size of the sky area with shall be scanned
+        :param azimuth: Step size in azimuth direction in degree
+        :param elevation: Step size in elevation direction in degree
+        :return: None
+        """
         if azimuth is None:
             print("Scan width in azimuth will be set to half HPBW")
             azimuth = self.ground_station.antenna.opening_angle_az / 2
@@ -100,6 +140,9 @@ class GroundStationController:
 
     def compute_path(self):
         """
+        This function calculates the motion path for the noise measurement.
+        :return: None
+
         A -> Start Point
         Z -> End Point
         X -> Center Point
@@ -114,7 +157,6 @@ class GroundStationController:
         #   # - # - #   #
                         |
         A - # - # - # - #
-
         """
         if self.step_size is None:
             raise AttributeError(
@@ -149,6 +191,11 @@ class GroundStationController:
         self._limit_axis()
 
     def track_motion_path(self, take_images: bool = False):
+        """
+        This function processes all previously computed points on the motion path and takes measurements.
+        :param take_images: If set True, an image will be taken at each position
+        :return: None
+        """
         self.set_target_frequency()
         for az_pos, el_pos in self.motion_path:
             target_pos = Position(az_pos, el_pos)
@@ -190,6 +237,12 @@ class GroundStationController:
         self.ground_station.sdr.stop_rx()
 
     def track_object(self, duration_s: float = 3600, sleep_interval_s: float = 5):
+        """
+        This function tracks the astronomical object for the given time frame.
+        :param duration_s: The duration of the object tracking in seconds
+        :param sleep_interval_s: The interval in which the position shall be updated, in seconds
+        :return: None
+        """
         stop_t = time.time() + duration_s
         while time.time() < stop_t:
             pos = self.astro_object.get_position()
@@ -216,14 +269,28 @@ class GroundStationController:
             self.motion_path.append((az, el))
 
     def take_image(self, image_path: str, overlay: bool = True):
+        """
+        This function takes an image with the provided webcam.
+        :param image_path: The path where the image shall be stored
+        :param overlay: If set True, an overlay with additional information will be added to the image
+        :return: None
+        """
         self.ground_station.webcam.take_image(
             image_path=image_path, overlay=overlay, antenna=self.ground_station.antenna
         )
 
     def get_measurement_points(self) -> [MeasurementPoint]:
+        """
+        This function returns the measurement results of the previous noise sweep
+        :return: List of MeasurementPoints
+        """
         return self.measurement_points
 
     def get_measurement_points_as_dataframe(self) -> pd.DataFrame:
+        """
+        This function returns the measurement results of the previous noise sweep, converted as a pandas DataFrame
+        :return: DataFrame with measurement results
+        """
         return pd.DataFrame([x.as_dict() for x in self.get_measurement_points()])
 
 

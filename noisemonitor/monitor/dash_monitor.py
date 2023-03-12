@@ -56,8 +56,10 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
                 "The intersection of the two dotted lines shows the maximum of estimated Gaussian distribution of the "
                 f"radiation source at {max_position.azimuth:.2f} azimuth and {max_position.elevation:.2f} elevation."
             ),
-            html.H6(f"The inaccuracy of the estimated position is thereby at least {pos_tol:.2f}° due to the rotator"
-                    " resolution."),
+            html.H6(
+                f"The inaccuracy of the estimated position is thereby at least {pos_tol:.2f}° due to the rotator"
+                " resolution."
+            ),
             html.H6(
                 "The green ellipse shows the half power band width of "
                 f"{oaz:.2f}° azimuth and {oel:.2f}° elevation."

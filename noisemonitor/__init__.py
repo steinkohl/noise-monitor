@@ -7,4 +7,3 @@ from .ground_station.ground_station import GroundStation
 from .ground_station.controller import GroundStationController
 from .monitor.dash_monitor import display_results
 from .monitor.plotly_figures import create_3d_figure, create_contour_figure
-from .monitor.gauss_fit_2d import gaussian_fit_2d_mesh, gaussian_fit_2d_max_pos

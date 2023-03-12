@@ -20,6 +20,13 @@ class SDR:
         lna_gain: float = None,
         psd_bins: int = None,
     ):
+        """
+        This function initialized the SDR class.
+        :param sampling_rate: The sample rate in which the SDR shall be configured, given in sample per second
+        :param device_driver: The device driver of the SDR used for SoapySDR, e.g. "uhd", "lime", "rtlsdr"
+        :param lna_gain: The gain in dB the LNA of the SDR shall be set to
+        :param psd_bins: In how many frequency bins shall the PSD data be collected?
+        """
         if device_driver is None:
             sdrs = self._detect_sdrs()
             if len(sdrs) > 1:
@@ -52,24 +59,43 @@ class SDR:
         self.stop_rx()
 
     def start_rx(self, frequency: float):
+        """
+        This function starts the receiving process around the given frequency.
+        :param frequency: The center of the frequency, where the PSD data shall be collected, given in Hertz
+        :return: None
+        """
         if self._sdr is not None:
             self._sdr.start_rx(frequency)
 
     def stop_rx(self):
+        """
+        This function stops the receiving process of the SDR.
+        :return: None
+        """
         if self._sdr is not None:
             self._sdr.stop_rx()
 
     def get_psd_levels(self) -> PSDLevels:
+        """
+        This function fetches the current PSD data, collected in the background process.
+        For this function to work, the receiving has to be started first!
+        :return: PSD levels
+        """
         return self._sdr.get_psd_levels()
 
     @property
     def frequency(self) -> float:
+        """
+        This function returns the center frequency of the running PSD calculations
+        :return: The center frequency of the running PSD in Hertz
+        """
         return self._sdr.frequency
 
     @staticmethod
     def _detect_sdrs() -> list:
         """
-        Detects Connected SDRs with feature SoapySDR support, if SoapySDR and drivers are installed.
+        This function detects connected SDRs with feature SoapySDR support, if SoapySDR and drivers are installed.
+        :return: List of detected SDR devices
         """
         proc = subprocess.Popen(
             "python3 -m soapypower --detect", shell=True, stdout=subprocess.PIPE

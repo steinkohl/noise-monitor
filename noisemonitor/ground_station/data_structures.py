@@ -4,6 +4,10 @@ import pandas as pd
 
 @dataclass
 class Position:
+    """
+    The Position represented in azimuth and elevation angles
+    """
+
     azimuth: float
     elevation: float
 
@@ -25,6 +29,10 @@ class Position:
 
 @dataclass
 class PSDLevels:
+    """
+    PSD measurement data
+    """
+
     timestamp: pd.Timestamp
     frequency_start: float
     frequency_stop: float
@@ -48,6 +56,10 @@ class PSDLevels:
 
 @dataclass
 class MeasurementPoint:
+    """
+    PSD measurement data, including metadata of the capture
+    """
+
     target_position: Position
     measurement_position: Position
     center_frequency: float

@@ -6,6 +6,11 @@ from .gauss_fit_2d import gaussian_fit_2d_mesh, gaussian_fit_2d_max_pos
 
 
 def create_3d_figure(sweep_df: pd.DataFrame) -> go.Figure:
+    """
+    Creates a 3D plotly go.Figure containing the measurement results
+    :param sweep_df: measurement results of the noise sweep
+    :return: plotly go.Figure containing the measurement results
+    """
     fig = go.Figure()
     bandwidth = sweep_df["psd_bandwidth"].unique()
     if bandwidth.size > 1:
@@ -21,8 +26,11 @@ def create_3d_figure(sweep_df: pd.DataFrame) -> go.Figure:
     )
     fig.add_trace(
         go.Surface(
-            x=X, y=Y, z=Z,
-            opacity=0.5, name="Gauss_Fit",
+            x=X,
+            y=Y,
+            z=Z,
+            opacity=0.5,
+            name="Gauss_Fit",
             showscale=False,
             showlegend=True,
         )
@@ -85,6 +93,12 @@ def create_3d_figure(sweep_df: pd.DataFrame) -> go.Figure:
 def create_contour_figure(
     sweep_df: pd.DataFrame, controller: GroundStationController
 ) -> (go.Figure, Position):
+    """
+    Creates a plotly go.Figure containing the measurement results presented in a contour plot
+    :param sweep_df: measurement results of the noise sweep
+    :param controller: controller object containing all necessary information for the overlay
+    :return: plotly go.Figure containing the measurement results
+    """
     fig = go.Figure()
     bandwidth = sweep_df["psd_bandwidth"].unique()
     if bandwidth.size > 1:

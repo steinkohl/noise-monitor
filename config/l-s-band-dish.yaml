@@ -21,7 +21,7 @@ groundstation:
     frequency_range: [1200e6, 1300e6]
   webcam:
     rtsp_url: 'rtsp://admin:430,200@192.168.59.49:554/h264Preview_01_main'
-    cam_opening: 90  # Horizontal opening angle of webcam in [deg]
+    cam_opening: 80  # Horizontal opening angle of webcam in [deg]
     position_azimuth: 0.539  # Position of pointing direction of antenna in azimuth axis in percent of image width
     position_elevation: 0.5625  # Position of pointing direction of antenna in elevation axis in percent of image height
 controller:

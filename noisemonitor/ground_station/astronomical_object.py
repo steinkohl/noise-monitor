@@ -13,11 +13,22 @@ class AstroObject:
     object_path: pd.DataFrame
 
     def __init__(self, object_name: str, observation_location: str):
+        """
+        This function initializes the astronomical object, which shall be observed
+        :param object_name: Name of the object
+        :param observation_location: Location of the observer
+        """
         self.object_name = str(object_name)
         self.observation_location = str(observation_location)
         self.object_path = self._get_object_path()
 
     def get_position(self, time_point: float = time.time()) -> Position:
+        """
+        Returns the position of the astronomical object at the given point in time.
+        If none is give, it returns the current position.
+        :param time_point: Timestamp of the point in time for which the position shall be calculated
+        :return: Position of the astronomical object
+        """
         t = time.time()
         if time_point is not None:
             t = float(time_point)

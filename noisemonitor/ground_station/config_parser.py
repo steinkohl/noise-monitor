@@ -87,4 +87,3 @@ def load_config_from_file(
     except Exception as e:
         raise Exception(f"Could not parse {config_file} due to Error: {e}")
     return vals
-

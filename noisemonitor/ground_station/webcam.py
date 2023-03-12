@@ -18,6 +18,13 @@ class Webcam:
         position_azimuth: float,
         position_elevation: float,
     ):
+        """
+        This function initializes the webcam.
+        :param rtsp_url: The RTSP url of the webcam.
+        :param cam_opening: The horizontal opening angle of the camera lens in degree
+        :param position_azimuth: The relative azimuth position of the antenna's pointing vector in the image from 0 to 1
+        :param position_elevation: The relative elevation position of the antenna's pointing vector in the image from 0 to 1
+        """
         self.rtsp_url = str(rtsp_url)
         self.cam_opening = float(cam_opening)
         self.position_azimuth = float(position_azimuth)
@@ -26,6 +33,13 @@ class Webcam:
     def take_image(
         self, image_path: str, overlay: bool = True, antenna: GenericAntenna = None
     ):
+        """
+        This function takes an images with the webcam and saves the file.
+        :param image_path: File path where the image should be stored
+        :param overlay: Shall the image contain the overlay of the ground station information - True or False
+        :param antenna: The antenna object necessary for the overlay
+        :return: None
+        """
         cap = cv2.VideoCapture(self.rtsp_url, cv2.CAP_FFMPEG)
         _, img = cap.read()
         if overlay:
@@ -42,6 +56,15 @@ class Webcam:
         object_name: str = None,
         object_position: Position = None,
     ) -> np.ndarray:
+        """
+        This function creates an image overlay based on the information of the antenna object.
+        :param img: Image which shall be augmented with the overlay
+        :param antenna: The antenna object, containing the data for the overlay
+        :param rotator_position: The position of the rotator which shall be annotated onto the image
+        :param object_name: The name of the object which is projected into the overlay, e.g. "Sun"
+        :param object_position: The position of the object which is projected into the overlay
+        :return:
+        """
         red_color = (0, 0, 255)
         green_color = (0, 255, 0)
         blue_color = (255, 0, 0)
