@@ -35,7 +35,11 @@ def display_results(controller: GroundStationController, sweep_df: pd.DataFrame 
     encoded_con = b64encode(html_bytes_con).decode()
 
     oaz, oel = controller.ground_station.antenna.opening_angle
-    pos_tol = controller.ground_station.rotator.get_positioning_tolerance()
+    try:
+        pos_tol = controller.config.get('groundstation').get('rotator').get('positioning_tolerance')
+        pos_tol = float(pos_tol)
+    except Exception:
+        pos_tol = float('inf')
 
     app.layout = html.Div(
         [

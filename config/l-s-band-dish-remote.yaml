@@ -5,6 +5,7 @@ groundstation:
     type: 'spid'  # Currently, only 'spid' type are supported
     netrotctl_ip: 'localhost'  # IP address of the netrotctl server
     netrotctl_port: '4533'  # Port of the netrotctl server
+    positioning_tolerance: 0.5
   sdr:
     type: 'uhd'  # Currently, 'uhd', 'lime' and 'rtlsdr' SDRs are supported
     sample_rate: 4e6  # Value in [Hz], if no sample rate is provided -> fallback to <type> default
